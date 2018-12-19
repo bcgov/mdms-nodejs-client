@@ -21,3 +21,4 @@
 'use strict';
 
 export * from './constants';
+export { AWClient } from './libs/awClient';
