@@ -1,12 +1,15 @@
 {
-  "name": "@bcgov/mdms",
+  "name": "@bcgov/mdms-nodejs-client",
   "version": "0.1.0",
   "description": "",
   "engine": "node 8.4.0",
   "main": "index.js",
   "author": "Jason C. Leach <jason.leach@fullboar.ca>",
+  "contributors": [
+    "Shelly Han <shelly.han@gov.bc.ca>"
+  ],
   "license": "Apache-2.0",
-  "homepage": "https://github.com/bcgov/mdms-utils",
+  "homepage": "https://github.com/bcgov/mdms-nodejs-client",
   "engines": {
     "node": "8.4.0"
   },
@@ -55,7 +58,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:bcgov/mdms-utils.git"
+    "url": "git+ssh://git@github.com:bcgov/mdms-nodejs-client.git"
   },
   "jest": {
     "verbose": true,

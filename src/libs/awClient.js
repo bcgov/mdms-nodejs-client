@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// Created by Jason Leach on 2018-01-15.
+// Created by Shelly Han on 2018-12-18.
 //
 
 'use strict';
@@ -25,11 +25,11 @@ import url from 'url';
 import { AW_SUB_URL, AW_ROOT_ORG_GROUP_ID } from '../constants';
 
 /**
- * Create the default request header with basic auth options
+ * Create the default request with basic auth options
  * @param {Object} options contains the AW host, aw-tenant-code and user credential pair
- * @return request header with auth params
+ * @return request with auth params
  */
-const setDefaultRequest = options => {
+export const setDefaultRequest = options => {
   if (!options.host) throw new Error('A airwatch host url must be provided');
   if (!options.token) throw new Error('The aw-tenant-code must be provided');
   if (!options.username) throw new Error('The service account username must be provided');
@@ -49,59 +49,65 @@ const setDefaultRequest = options => {
 
 /**
  * Fetch list of organization groups
- * @param {Object} req the request with auth and action options
+ * @param {Object} options the request with auth and action options
+ * @param {int} orgID the Organization ID, default to be the root org
  * @return array of organization groups with specified attributes
  */
-const fetchOrgGroups = async req => {
+export const fetchOrgGroups = async (options, orgID) => {
   try {
-    const res = await request(req);
+    const res = await request(options);
     const jsonRes = JSON.parse(res);
-    const filteredOrgs = jsonRes.filter(
-      org => org.ParentLocationGroup.Id.Value === AW_ROOT_ORG_GROUP_ID
-    );
+    const filteredOrgs =
+      orgID === undefined
+        ? jsonRes.filter(org => org.ParentLocationGroup.Id.Value === AW_ROOT_ORG_GROUP_ID)
+        : jsonRes.filter(org => org.Id.Value === orgID);
+    if (orgID) {
+      return filteredOrgs;
+    }
     const targetOrgs = filteredOrgs.map(org => ({
       Name: org.Name,
       GroupId: org.GroupId,
+      Id: org.Id.Value,
       ParentId: org.ParentLocationGroup.Id.Value,
       Uuid: org.Uuid,
     }));
 
     return targetOrgs;
   } catch (err) {
-    return err;
+    throw new Error(`Cannot find list of organization groups: ${err}`);
   }
 };
 
 /**
  * AirWatch client
  * @param {Object} authOptions contains the AW host, aw-tenant-code and user credential pair
- * @param {Object} actionOptions contains the specific options for different requests, optional
  */
 export class AWClient {
-  constructor(authOptions, actionOptions) {
+  constructor(authOptions) {
     if (!authOptions || Object.keys(authOptions).length !== 4) {
       throw new Error('Invalid authentication options');
     }
     this.authOptions = authOptions;
-    this.actionOptions = actionOptions;
   }
 
-  async allOrgGroups() {
-    const subUrl = AW_SUB_URL.ORG_GROUP.concat(AW_ROOT_ORG_GROUP_ID, AW_SUB_URL.ORG_GROUP_CHILDREN);
-    this.authHeader = setDefaultRequest(this.authOptions);
-    // conbine the request header
+  /**
+   * Fetch aw organization groups
+   * @param {int} orgID optional. if not specified, return list of all org groups
+   */
+  async findOrgGroups(orgID) {
+    const subUrl =
+      orgID === undefined
+        ? AW_SUB_URL.ORG_GROUP.concat(AW_ROOT_ORG_GROUP_ID, AW_SUB_URL.ORG_GROUP_CHILDREN)
+        : AW_SUB_URL.ORG_GROUP.concat(orgID, AW_SUB_URL.ORG_GROUP_CHILDREN);
+    this.defaultReq = setDefaultRequest(this.authOptions);
+    // conbine the request options
     const options = {
-      ...this.authHeader,
+      ...this.defaultReq,
       ...{
         uri: url.resolve(this.authOptions.host, subUrl),
         method: 'GET',
       },
     };
-    try {
-      const orgGroupList = await fetchOrgGroups(options);
-      return orgGroupList;
-    } catch (err) {
-      throw Error('Cannot get list of organization groups: ', err);
-    }
+    return fetchOrgGroups(options, orgID);
   }
 }
