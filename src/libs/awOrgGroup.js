@@ -31,7 +31,7 @@ import { defaultRequestParams } from './utils';
  * @param {Integer} parentOrgID the parent Organization Group ID
  * @return array of organization groups
  */
-export const childrenList = (orgGroupList, parentOrgID) => {
+export const listChildren = (orgGroupList, parentOrgID) => {
   try {
     return orgGroupList
       .filter(org => org.ParentLocationGroup.Id.Value === parentOrgID)
@@ -51,10 +51,10 @@ export const childrenList = (orgGroupList, parentOrgID) => {
  * Fetch all organization groups
  * @param {Object} credential the authentication options
  * @param {Integer} rootOrgID the root Organization Group ID
- * @param {Boolean} includeChildren include the array of child org groups
+ * @param {Boolean} includeChildren include the array of child org groups, default as false
  * @return array of organization groups
  */
-export const getAllOrgGroups = async (credential, rootOrgID, includeChildren) => {
+export const getAllOrgGroups = async (credential, rootOrgID, includeChildren = false) => {
   // check and set default request header and auth
   const defaultReq = defaultRequestParams(credential);
   // set the sub-url of the request
@@ -73,12 +73,12 @@ export const getAllOrgGroups = async (credential, rootOrgID, includeChildren) =>
     const jsonRes = JSON.parse(res);
 
     // get all org groups directly under root org group
-    const topLevelOrgGroups = childrenList(jsonRes, rootOrgID);
+    const topLevelOrgGroups = listChildren(jsonRes, rootOrgID);
     if (!includeChildren) return topLevelOrgGroups;
 
     const allOrgGroups = topLevelOrgGroups.map(org => ({
       ...org,
-      ...{ children: childrenList(jsonRes, org.id) },
+      ...{ children: listChildren(jsonRes, org.id) },
     }));
     return allOrgGroups;
   } catch (err) {
@@ -90,10 +90,10 @@ export const getAllOrgGroups = async (credential, rootOrgID, includeChildren) =>
  * Get the details of an organization group
  * @param {Object} credential the authentication options
  * @param {Integer} orgID the Organization Group ID to look for
- * @param {Boolean} includeChildren include the array of child org groups
+ * @param {Boolean} includeChildren include the array of child org groups, default as false
  * @return array of organization groups
  */
-export const getOrgGroupDetail = async (credential, orgID, includeChildren) => {
+export const getOrgGroupDetail = async (credential, orgID, includeChildren = false) => {
   // check and set default request header and auth
   const defaultReq = defaultRequestParams(credential);
   // set the sub-url of the request
@@ -121,7 +121,7 @@ export const getOrgGroupDetail = async (credential, orgID, includeChildren) => {
     }
     // Org group has list of children
 
-    return { ...orgGroupDetail[0], ...{ children: childrenList(jsonRes, orgID) } };
+    return { ...orgGroupDetail[0], ...{ children: listChildren(jsonRes, orgID) } };
   } catch (err) {
     throw new Error(`Cannot get the list of organization groups: ${err}`);
   }
