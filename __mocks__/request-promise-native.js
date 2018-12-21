@@ -22,7 +22,7 @@
 
 'use strict';
 
-import { ORG_GROUP_ARRAY, AUTH_PAIR } from '../__fixtures__/awOrg-fixtures';
+import { ORG_GROUP_FULL_LIST, ORG_GROUP_SUB_LIST, AUTH_PAIR } from '../__fixtures__/awOrg-fixtures';
 
 let rpn = jest.genMockFromModule('request-promise-native');
 
@@ -30,11 +30,20 @@ function request(options) {
   return new Promise((resolve, reject) => {
     if (JSON.stringify(options.auth) === JSON.stringify(AUTH_PAIR)) {
       if (options.uri.includes('system/groups')) {
-        return resolve(JSON.stringify(ORG_GROUP_ARRAY));
+        if (options.uri.includes('2')) {
+          if (options.uri.includes('children')) {
+            return resolve(JSON.stringify(ORG_GROUP_SUB_LIST));
+          }
+          return resolve(JSON.stringify(ORG_GROUP_FULL_LIST[1]));
+        }
+        if (options.uri.includes('1000')) {
+          return resolve(JSON.stringify([]));
+        }
+        return resolve(JSON.stringify(ORG_GROUP_FULL_LIST));
       }
       return reject();
     }
-    return reject('Unauthed');
+    return reject(Error('Unauthed'));
   });
 }
 
