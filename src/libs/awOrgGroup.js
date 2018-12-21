@@ -23,7 +23,7 @@
 import request from 'request-promise-native';
 import url from 'url';
 import { AW_SUB_URL } from '../constants';
-import { setDefaultRequest } from './utils';
+import { defaultRequestParams } from './utils';
 
 /**
  * Generate array of child organization groups
@@ -56,7 +56,7 @@ export const childrenList = (jsonRes, parentOrgID) => {
  */
 export const getAllOrgGroups = async (credential, rootOrgID, includeChildren) => {
   // check and set default request header and auth
-  const defaultReq = setDefaultRequest(credential);
+  const defaultReq = defaultRequestParams(credential);
   // set the sub-url of the request
   const subUrl = AW_SUB_URL.ORG_GROUP.concat(rootOrgID, AW_SUB_URL.ORG_GROUP_CHILDREN);
   // combine the request option
@@ -95,7 +95,7 @@ export const getAllOrgGroups = async (credential, rootOrgID, includeChildren) =>
  */
 export const getOrgGroupDetail = async (credential, orgID, includeChildren) => {
   // check and set default request header and auth
-  const defaultReq = setDefaultRequest(credential);
+  const defaultReq = defaultRequestParams(credential);
   // set the sub-url of the request
   const subUrl = includeChildren
     ? AW_SUB_URL.ORG_GROUP.concat(orgID, AW_SUB_URL.ORG_GROUP_CHILDREN)

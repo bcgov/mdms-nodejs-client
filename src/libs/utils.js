@@ -29,7 +29,7 @@ import { AW_SUB_URL } from '../constants';
  * @param {Object} options contains the AW host, aw-tenant-code and user credential pair
  * @return request with auth params
  */
-export const setDefaultRequest = options => {
+export const defaultRequestParams = options => {
   if (!options.host) throw new Error('A airwatch host url must be provided');
   if (!options.token) throw new Error('The aw-tenant-code must be provided');
   if (!options.username) throw new Error('The service account username must be provided');
@@ -54,7 +54,7 @@ export const setDefaultRequest = options => {
  */
 export const checkAWRequest = async options => {
   try {
-    const defaultReq = setDefaultRequest(options);
+    const defaultReq = defaultRequestParams(options);
     const defaultOpt = {
       ...defaultReq,
       ...{

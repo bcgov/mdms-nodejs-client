@@ -20,7 +20,7 @@
 
 'use strict';
 
-import { setDefaultRequest } from '../src/libs/utils';
+import { defaultRequestParams } from '../src/libs/utils';
 
 jest.mock('request-promise-native');
 
@@ -48,14 +48,14 @@ describe('AirWatch helper functions should', () => {
       },
     };
     const option = AUTH_OPTIONS.OPTION_1;
-    const defaultReq = setDefaultRequest(option);
+    const defaultReq = defaultRequestParams(option);
     expect(defaultReq).toEqual(expected);
   });
 
-  test('setDefaultRequest handles when missing options', () => {
+  test('defaultRequestParams handles when missing options', () => {
     const option = AUTH_OPTIONS.OPTION_2;
     expect(() => {
-      setDefaultRequest(option);
+      defaultRequestParams(option);
     }).toThrow('The service account username must be provided');
   });
 });
