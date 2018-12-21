@@ -27,13 +27,13 @@ import { defaultRequestParams } from './utils';
 
 /**
  * Generate array of child organization groups
- * @param {Object} jsonRes the full list
+ * @param {Object} orgGroupList the list of org groups in JSON format
  * @param {Integer} parentOrgID the parent Organization Group ID
  * @return array of organization groups
  */
-export const childrenList = (jsonRes, parentOrgID) => {
+export const childrenList = (orgGroupList, parentOrgID) => {
   try {
-    return jsonRes
+    return orgGroupList
       .filter(org => org.ParentLocationGroup.Id.Value === parentOrgID)
       .map(org => ({
         name: org.Name,
