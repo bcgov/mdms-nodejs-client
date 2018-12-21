@@ -4,8 +4,8 @@
   "description": "",
   "engine": "node 8.4.0",
   "main": "index.js",
-  "author": "Jason C. Leach <jason.leach@fullboar.ca>",
   "contributors": [
+    "Jason C. Leach <jason.leach@fullboar.ca>",
     "Shelly Han <shelly.han@gov.bc.ca>"
   ],
   "license": "Apache-2.0",
