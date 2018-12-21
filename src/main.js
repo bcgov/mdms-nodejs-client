@@ -21,5 +21,5 @@
 'use strict';
 
 export * from './constants';
-export { setDefaultRequest } from './libs/utils';
+export { setDefaultRequest, checkAWRequest } from './libs/utils';
 export { getAllOrgGroups, getOrgGroupDetail } from './libs/awOrgGroup';
