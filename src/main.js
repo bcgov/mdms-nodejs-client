@@ -21,4 +21,5 @@
 'use strict';
 
 export * from './constants';
-export { AWClient } from './libs/awClient';
+export { setDefaultRequest } from './libs/utils';
+export { getAllOrgGroups, getOrgGroupDetail } from './libs/awOrgGroup';

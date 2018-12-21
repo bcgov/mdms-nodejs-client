@@ -21,10 +21,8 @@
 'use strict';
 
 // eslint-disable-next-line import/prefer-default-export
-
 export const AW_SUB_URL = {
   ORG_GROUP: 'system/groups/',
   ORG_GROUP_CHILDREN: '/children',
+  SYS_INFO: 'system/info',
 };
-
-export const AW_ROOT_ORG_GROUP_ID = 574;
