@@ -47,6 +47,11 @@ export const setDefaultRequest = options => {
   };
 };
 
+/**
+ * Get airwatch system info, serve as a health check of the request
+ * @param {Object} options contains the AW host, aw-tenant-code and user credential pair
+ * @return system info
+ */
 export const checkAWRequest = async options => {
   try {
     const defaultReq = setDefaultRequest(options);

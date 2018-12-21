@@ -20,12 +20,11 @@
 
 'use strict';
 
-import { setDefaultRequest, fetchOrgGroups } from '../src/libs/awClient';
-import { EXPECTED_ORG_GROUP_1, EXPECTED_ORG_GROUP_2 } from '../__fixtures__/awOrg-fixtures';
+import { setDefaultRequest } from '../src/libs/utils';
 
 jest.mock('request-promise-native');
 
-describe('AirWatch Client should', () => {
+describe('AirWatch helper functions should', () => {
   const AUTH_OPTIONS = {
     OPTION_1: {
       host: 'https://test.com',
@@ -39,52 +38,6 @@ describe('AirWatch Client should', () => {
       password: 'password1',
     },
   };
-
-  const ORG_GROUP_OPTIONS = {
-    OPTION_1: {
-      headers: {
-        'Content-Type': 'application/json',
-        'aw-tenant-code': 'test1',
-      },
-      auth: {
-        user: 'user1',
-        pass: 'password1',
-      },
-      uri: 'https://test.com/api/system/groups/1/children',
-      method: 'GET',
-    },
-    OPTION_2: {
-      headers: {
-        'Content-Type': 'application/json',
-        'aw-tenant-code': 'test1',
-      },
-      auth: {
-        user: 'user1',
-        pass: 'password2',
-      },
-      uri: 'https://test.com/api/system/groups/1',
-      method: 'GET',
-    },
-  };
-
-  test('fetch all of organization groups as defualt', async () => {
-    const option = ORG_GROUP_OPTIONS.OPTION_1;
-    const orgGroupList = await fetchOrgGroups(option);
-    expect(orgGroupList).toEqual(EXPECTED_ORG_GROUP_1);
-  });
-
-  test('fetch full info fo the organization group when OrgId specified', async () => {
-    const option = ORG_GROUP_OPTIONS.OPTION_1;
-    const orgGroupList = await fetchOrgGroups(option, 2);
-    expect(orgGroupList).toEqual(EXPECTED_ORG_GROUP_2);
-  });
-
-  test('throw when not authed', async () => {
-    const option = ORG_GROUP_OPTIONS.OPTION_2;
-    await expect(fetchOrgGroups(option)).rejects.toThrow(
-      'Cannot find list of organization groups: Unauthed'
-    );
-  });
 
   test('set the default request with authentication options', () => {
     const expected = {
