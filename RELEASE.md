@@ -11,3 +11,7 @@
 ## 0.1.2
 
 - Update readme and ignore unwanted files
+
+## 0.1.3
+
+- Correct variable names

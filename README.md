@@ -29,13 +29,13 @@ For Example, to get a list of all organization groups in AirWatch, including the
 ```javascript
 // Set the AW credentials as env vars:
 //  AW_HOST
-//  AW_TOKEN
+//  AW_TENANT_CODE
 //  AW_USERNAME
 //  AW_PASSWORD
 
-const awCredential = {
+const awCredentials = {
   host: process.env.AW_HOST,
-  token: process.env.AW_TOKEN,
+  tenantCode: process.env.AW_TENANT_CODE,
   username: process.env.AW_USERNAME,
   password: process.env.AW_PASSWORD,
 };
@@ -46,7 +46,7 @@ const rootOrgID = 0;
 // Default is false
 const includeChildren = true;
 
-const allOrgGroups = await getAllOrgGroups(awCredential, rootOrgID, includeChildren);
+const allOrgGroups = await getAllOrgGroups(awCredentials, rootOrgID, includeChildren);
 ```
 
 ## Project Status / Goals / Roadmap

@@ -49,21 +49,21 @@ export const listChildren = (orgGroupList, parentOrgID) => {
 
 /**
  * Fetch all organization groups
- * @param {Object} credential the authentication options
+ * @param {Object} credentials the authentication options
  * @param {Integer} rootOrgID the root Organization Group ID
  * @param {Boolean} includeChildren include the array of child org groups, default as false
  * @return array of organization groups
  */
-export const getAllOrgGroups = async (credential, rootOrgID, includeChildren = false) => {
+export const getAllOrgGroups = async (credentials, rootOrgID, includeChildren = false) => {
   // check and set default request header and auth
-  const defaultReq = defaultRequestParams(credential);
+  const defaultReq = defaultRequestParams(credentials);
   // set the sub-url of the request
   const subUrl = AW_SUB_URL.ORG_GROUP.concat(rootOrgID, AW_SUB_URL.ORG_GROUP_CHILDREN);
   // combine the request option
   const options = {
     ...defaultReq,
     ...{
-      uri: url.resolve(credential.host, subUrl),
+      uri: url.resolve(credentials.host, subUrl),
       method: 'GET',
     },
   };
@@ -88,14 +88,14 @@ export const getAllOrgGroups = async (credential, rootOrgID, includeChildren = f
 
 /**
  * Get the details of an organization group
- * @param {Object} credential the authentication options
+ * @param {Object} credentials the authentication options
  * @param {Integer} orgID the Organization Group ID to look for
  * @param {Boolean} includeChildren include the array of child org groups, default as false
  * @return array of organization groups
  */
-export const getOrgGroupDetail = async (credential, orgID, includeChildren = false) => {
+export const getOrgGroupDetail = async (credentials, orgID, includeChildren = false) => {
   // check and set default request header and auth
-  const defaultReq = defaultRequestParams(credential);
+  const defaultReq = defaultRequestParams(credentials);
   // set the sub-url of the request
   const subUrl = includeChildren
     ? AW_SUB_URL.ORG_GROUP.concat(orgID, AW_SUB_URL.ORG_GROUP_CHILDREN)
@@ -104,7 +104,7 @@ export const getOrgGroupDetail = async (credential, orgID, includeChildren = fal
   const options = {
     ...defaultReq,
     ...{
-      uri: url.resolve(credential.host, subUrl),
+      uri: url.resolve(credentials.host, subUrl),
       method: 'GET',
     },
   };
