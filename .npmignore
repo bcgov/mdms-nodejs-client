@@ -33,3 +33,9 @@ node_modules
 # Tests
 __mocks__
 __tests__
+__fixtures__
+
+# Local dev configs
+.vscode
+.editorconfig
+.prettierrc

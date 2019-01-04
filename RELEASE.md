@@ -1,31 +1,13 @@
 # Release Notes
 
-## 0.0.16
+## 0.1.0
 
-- Fix unhandled promise warnings
-- Update package lock
+- pulished first version
 
-## 0.0.15
+## 0.1.1
 
-- Fix exporting JWTServiceManager
+- Update readme
 
-## 0.0.14
+## 0.1.2
 
-- Add JWT Service Account token manager
-
-## 0.0.13
-
-- Check options for service token request
-
-## 0.0.12
-
-- Add function to fetch SSO service account token
-- Initial work on unit tests
-
-## 0.0.11
-
-- No code changes
-
-## 0.0.10
-
-- Refactor certificate checking
+- Update readme and ignore unwanted files

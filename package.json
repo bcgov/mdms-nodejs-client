@@ -1,7 +1,7 @@
 {
   "name": "@bcgov/mdms-nodejs-client",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.1.2",
+  "description": "API wrapper for AirWatch Client",
   "engine": "node 8.4.0",
   "main": "index.js",
   "contributors": [

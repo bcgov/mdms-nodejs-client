@@ -1,30 +1,53 @@
 ## About
 
-Code duplication is a big issue. As developers move from from project to project we often copy and paste snippets of code between projects. While this is quick and easy its very hard to maintain.
-
-This project is intended to act as a place where NodeJS developers can store and share useful snippets of code.
+For applications that need to manage AirWatch, we provide an API wrapper of the AirWatch Client
 
 ## Usage
 
 Install via `npm` as you would with any other package by supplying both the repo URL and branch or tag reference. In the example below the tag _v0.0.1_ is used.
 
 ```console
-npm i -S @bcgov/common-nodejs-utils
+npm i -S @bcgov/mdms-nodejs-client
 ```
 
 You can also directly add it to your `package.json` file by inserting the following line into your dependencies section:
 
 ```json
-"@bcgov/common-nodejs-utils": "git+https://git@github.com/bcgov/common-nodejs-utils.git#v0.0.1",
+"@bcgov/mdms-nodejs-client": "git+https://git@github.com/bcgov/mdms-nodejs-client.git#v0.1.0",
 ```
 
 Once you installed you can can use it like any other module:
 
 ```javascript
-import { errorWithCode } from '@bcgov/common-nodejs-utils';
+import { getAllOrgGroups } from '@bcgov/mdms-nodejs-client';
 ```
 
 \* You can also use the ssh protocol preferred.
+
+For Example, to get a list of all organization groups in AirWatch, including the sub origanization groups:
+
+```javascript
+// Set the AW credentials as env vars:
+//  AW_HOST
+//  AW_TOKEN
+//  AW_USERNAME
+//  AW_PASSWORD
+
+const awCredential = {
+  host: process.env.AW_HOST,
+  token: process.env.AW_TOKEN,
+  username: process.env.AW_USERNAME,
+  password: process.env.AW_PASSWORD,
+};
+
+// You will need to know the ID of the root organization group in AirWatch:
+const rootOrgID = 0;
+
+// Default is false
+const includeChildren = true;
+
+const allOrgGroups = await getAllOrgGroups(awCredential, rootOrgID, includeChildren);
+```
 
 ## Project Status / Goals / Roadmap
 
@@ -57,6 +80,6 @@ Create a pull request with your code. Its really that simple.
     See the License for the specific language governing permissions and
     limitations under the License.
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">common-nodejs-utils</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">the Province of British Columbia</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">mdms-nodejs-client</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">the Province of British Columbia</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 
 [export-xcarchive]: https://github.com/bcdevops/mobile-cicd-api/raw/develop/doc/images/export-xcarchive.gif 'Prepare & Export xcarchive'
