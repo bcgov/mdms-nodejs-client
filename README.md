@@ -33,7 +33,7 @@ For Example, to get a list of all organization groups in AirWatch, including the
 //  AW_USERNAME
 //  AW_PASSWORD
 
-const awCredentials = {
+const credentials = {
   host: process.env.AW_HOST,
   tenantCode: process.env.AW_TENANT_CODE,
   username: process.env.AW_USERNAME,
@@ -46,7 +46,7 @@ const rootOrgID = 0;
 // Default is false
 const includeChildren = true;
 
-const allOrgGroups = await getAllOrgGroups(awCredentials, rootOrgID, includeChildren);
+const allOrgGroups = await getAllOrgGroups(credentials, rootOrgID, includeChildren);
 ```
 
 ## Project Status / Goals / Roadmap
