@@ -31,14 +31,14 @@ import { AW_SUB_URL } from '../constants';
  */
 export const defaultRequestParams = options => {
   if (!options.host) throw new Error('A airwatch host url must be provided');
-  if (!options.token) throw new Error('The aw-tenant-code must be provided');
+  if (!options.tenantCode) throw new Error('The aw-tenant-code must be provided');
   if (!options.username) throw new Error('The service account username must be provided');
   if (!options.password) throw new Error('The service account password must be provided');
 
   return {
     headers: {
       'Content-Type': 'application/json',
-      'aw-tenant-code': options.token,
+      'aw-tenant-code': options.tenantCode,
     },
     auth: {
       user: options.username,

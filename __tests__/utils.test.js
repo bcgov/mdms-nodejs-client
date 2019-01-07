@@ -28,13 +28,13 @@ describe('AirWatch helper functions should', () => {
   const AUTH_OPTIONS = {
     OPTION_1: {
       host: 'https://test.com',
-      token: 'test1',
+      tenantCode: 'test1',
       username: 'user1',
       password: 'password1',
     },
     OPTION_2: {
       host: 'https://test.com',
-      token: 'test1',
+      tenantCode: 'test1',
       password: 'password1',
     },
   };
